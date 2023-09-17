@@ -1,4 +1,4 @@
-package com.example.surf_flutter_courses_template
+package com.example.surf_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,23 +1,16 @@
-# Description of your result
+# surf_flutter
 
-You can describe your results in any language that is convenient for you, not just English.
+A new Flutter project.
 
-## Description
+## Getting Started
 
-[Describe what you have done]
+This project is a starting point for a Flutter application.
 
-## How to
+A few resources to get you started if this is your first Flutter project:
 
-[Describe how to run your application if there are any issues]
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-## Problems
-
-[Describe the problems you encountered]
-
-## More
-
-[Here you can brag about what you managed to implement or do something beyond the task]
-
-## Demo
-
-[Leave links to screencasts/screenshots here, you can use a GitHub repository or a separate cloud service]
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
