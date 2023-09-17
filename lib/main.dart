@@ -30,8 +30,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _incrementCounterValue = 0;
+  int _decrementCounterValue = 0;
+
+  void _decrementCounter() {
+    _decrementCounterValue++;
+    setState(() {
+      if (_counter > 0) {
+        _counter--;
+      }
+    });
+  }
 
   void _incrementCounter() {
+    _incrementCounterValue++;
     setState(() {
       _counter++;
     });
@@ -45,22 +57,39 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Text(
+              'Результат: $_counter',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'Количество нажатий прибавить: $_incrementCounterValue',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Text(
+              'Количество нажатий отнять: $_decrementCounterValue',
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _decrementCounter,
+            tooltip: 'Decrement',
+            child: const Icon(Icons.remove),
+          ),
+          const SizedBox(width: 20),
+          FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          )
+        ],
       ),
     );
   }
