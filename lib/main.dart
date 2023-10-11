@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:surf_flutter/Models/entities.dart';
 import 'package:surf_flutter/Models/input.dart';
-import 'package:surf_flutter/Widgets/footer_widget.dart';
 import 'package:collection/collection.dart';
+import 'package:surf_flutter/Widgets/other_screen_widgets.dart';
 
-import 'Models/product_model.dart';
 import 'Widgets/personal_widget.dart';
 import 'custom_theme.dart';
 
@@ -35,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 extension AmountType on Amount {
-  String priceText() {
+  String amountText() {
     switch (runtimeType) {
       case Quantity:
         return "$value шт";
@@ -45,6 +44,12 @@ extension AmountType on Amount {
       default:
         return "$value";
     }
+  }
+}
+
+extension PriceText on double {
+  String toRub() {
+    return "${this / 1000} руб.";
   }
 }
 
@@ -60,29 +65,11 @@ class _MyHomePageState extends State<MyHomePage>
     TabModel("Личное", "assets/images/person_outline.svg")
   ];
 
-  List<StatelessWidget> pages = [
+  List<Widget> pages = [
     CatalogWidget(),
     SearchWidget(),
     BagWidget(),
-    PersonalWidget(
-      elements: products
-              .map((e) => ProductModel(
-                  e.title,
-                  e.amount.priceText(),
-                  (e.price / 1000).toString(),
-                  e.sale > 0 ? (e.sale / 1000).toString() : null,
-                  e.imageUrl) as Object)
-              .toList() +
-          [
-            FotterItemModel(
-                title: "В вашей покупке",
-                result: "7 542 руб.",
-                items: [
-                  FooterItemValueModel("10 товаров", "7 842 руб"),
-                  FooterItemValueModel("Скидка 5%", "- 300 руб")
-                ])
-          ],
-    )
+    PersonalWidget(products)
   ];
 
   @override
@@ -102,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("widget.title"),
+          title: const Text("Шестёрочка"),
         ),
         bottomNavigationBar: Container(
             decoration: BoxDecoration(

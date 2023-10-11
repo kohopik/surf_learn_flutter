@@ -1,13 +1,22 @@
 import 'package:flutter/widgets.dart';
+import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
 import 'highlightable_button.dart';
 
-class HeadItemModel {
+class HeadItemModel implements WidgetFactory {
   final String title;
   final String imageURL;
+  final bool isButtonHighlighted;
+  final Function() _onTap;
 
-  HeadItemModel(this.title, this.imageURL);
+  HeadItemModel(
+      this.title, this.imageURL, this.isButtonHighlighted, this._onTap);
+
+  @override
+  Widget build() {
+    return HeadItemWidget(model: this);
+  }
 }
 
 class HeadItemWidget extends StatelessWidget {
@@ -27,9 +36,25 @@ class HeadItemWidget extends StatelessWidget {
             SizedBox(
               width: 32,
               height: 32,
-              child: HighlightableButton(),
+              child: HighlightableButton(
+                  onTap: _model._onTap,
+                  isHightlighted: _model.isButtonHighlighted),
             )
           ],
         ));
+  }
+}
+
+class TextHeadModel extends WidgetFactory {
+  final String title;
+
+  TextHeadModel(this.title);
+
+  @override
+  Widget build() {
+    return Text(
+      title,
+      style: CustomFontStyles.largeTitle1,
+    );
   }
 }

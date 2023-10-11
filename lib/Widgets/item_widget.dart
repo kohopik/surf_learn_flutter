@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
@@ -48,9 +49,21 @@ class ItemWidget extends StatelessWidget {
                             model.count,
                             style: CustomFontStyles.body,
                           ),
-                          if (model.sale != null)
-                            Text(model.sale!, style: CustomFontStyles.body1),
-                          Text(model.price, style: CustomFontStyles.body1)
+                          Row(children: [
+                            if (model.sale != null)
+                              Text(
+                                model.sale!,
+                                style: CustomFontStyles.body1.apply(
+                                    decoration: TextDecoration.lineThrough,
+                                    color: CustomColorStyles.ivanovo),
+                              ),
+                            if (model.sale != null) const SizedBox(width: 16),
+                            Text(model.price,
+                                style: CustomFontStyles.body1.apply(
+                                    color: model.sale == null
+                                        ? CustomColorStyles.moscow
+                                        : CustomColorStyles.london))
+                          ])
                         ])
                   ],
                 ))

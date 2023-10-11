@@ -1,23 +1,29 @@
 import 'package:flutter/widgets.dart';
+import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
-class FooterItemValueModel {
+final class FooterItemValueModel {
   final String name;
   final String value;
 
   FooterItemValueModel(this.name, this.value);
 }
 
-class FotterItemModel {
+final class FotterItemModel implements WidgetFactory {
   final String title;
   final String result;
   final List<FooterItemValueModel> items;
 
   FotterItemModel(
       {required this.title, required this.result, required this.items});
+
+  @override
+  Widget build() {
+    return FooterItemWidget(model: this);
+  }
 }
 
-class FooterItemValueWidget extends StatelessWidget {
+final class FooterItemValueWidget extends StatelessWidget {
   late final FooterItemValueModel _model;
   FooterItemValueWidget({super.key, required FooterItemValueModel model}) {
     _model = model;
@@ -35,7 +41,7 @@ class FooterItemValueWidget extends StatelessWidget {
   }
 }
 
-class FooterItemWidget extends StatelessWidget {
+final class FooterItemWidget extends StatelessWidget {
   late final FotterItemModel _model;
   final int titleResultInset = 2;
   late final int numberOfElements;

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surf_flutter/custom_theme.dart';
 
 class HighlightableButton extends StatefulWidget {
+  final Function() onTap;
+  final bool isHightlighted;
+
+  const HighlightableButton(
+      {super.key, required this.onTap, required this.isHightlighted});
+
   @override
   HighlightableButtonState createState() => HighlightableButtonState();
 }
@@ -9,28 +16,31 @@ class HighlightableButton extends StatefulWidget {
 class HighlightableButtonState extends State<HighlightableButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          color: Color.fromRGBO(241, 241, 241, 1),
-          borderRadius: BorderRadius.all(Radius.circular(6))),
-      child: Stack(children: [
-        Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              "assets/images/sort.svg",
-              fit: BoxFit.scaleDown,
-            )),
-        Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-                padding: const EdgeInsets.only(bottom: 5, right: 5),
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.green),
-                )))
-      ]),
-    );
+    return GestureDetector(
+        onTap: widget.onTap,
+        child: Container(
+          decoration: BoxDecoration(
+              color: CustomColorStyles.alyaska,
+              borderRadius: const BorderRadius.all(Radius.circular(6))),
+          child: Stack(children: [
+            Align(
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  "assets/images/sort.svg",
+                  fit: BoxFit.scaleDown,
+                )),
+            if (widget.isHightlighted)
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                      padding: const EdgeInsets.only(bottom: 5, right: 5),
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.green),
+                      )))
+          ]),
+        ));
   }
 }
