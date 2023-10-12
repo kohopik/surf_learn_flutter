@@ -21,6 +21,7 @@ extension CustomFontStyles on TextTheme {
 }
 
 extension CustomColorStyles on ColorScheme {
+  static Color get alyaska => const Color.fromRGBO(241, 241, 241, 1);
   static Color get moscow => const Color.fromRGBO(37, 40, 73, 1);
   static Color get london => Colors.red;
   static Color get ivanovo => const Color.fromRGBO(181, 181, 181, 1);

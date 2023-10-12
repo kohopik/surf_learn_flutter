@@ -1,3 +1,5 @@
+import 'package:surf_flutter/Models/entities.dart';
+
 extension AmountType on Amount {
   String amountText() {
     switch (runtimeType) {

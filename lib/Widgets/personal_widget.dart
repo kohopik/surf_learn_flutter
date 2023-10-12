@@ -1,6 +1,7 @@
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surf_flutter/Extensions/product_extensions.dart';
 import 'package:surf_flutter/Models/entities.dart';
 import 'package:surf_flutter/Models/price_sortable.dart';
 import 'package:surf_flutter/Models/product_model.dart';

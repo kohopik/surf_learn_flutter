@@ -44,17 +44,3 @@ class HeadItemWidget extends StatelessWidget {
         ));
   }
 }
-
-class TextHeadModel extends WidgetFactory {
-  final String title;
-
-  TextHeadModel(this.title);
-
-  @override
-  Widget build() {
-    return Text(
-      title,
-      style: CustomFontStyles.largeTitle1,
-    );
-  }
-}
