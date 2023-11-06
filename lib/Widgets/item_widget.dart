@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
-import '../Models/product_model.dart';
+import '../Models/item_model.dart';
 
 class ItemWidget extends StatelessWidget {
-  final ProductModel model;
+  final ItemModel model;
 
   const ItemWidget({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
+    final CustomColors colors = Theme.of(context).extension<CustomColors>()!;
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     return SizedBox(
         height: 100,
         child: Padding(
@@ -39,7 +41,7 @@ class ItemWidget extends StatelessWidget {
                           child: Text(
                             model.title,
                             textAlign: TextAlign.left,
-                            style: CustomFontStyles.body,
+                            style: fonts.body,
                           )),
                     ),
                     Row(
@@ -47,22 +49,22 @@ class ItemWidget extends StatelessWidget {
                         children: [
                           Text(
                             model.count,
-                            style: CustomFontStyles.body,
+                            style: fonts.body,
                           ),
                           Row(children: [
                             if (model.sale != null)
                               Text(
                                 model.sale!,
-                                style: CustomFontStyles.body1.apply(
+                                style: fonts.body1.apply(
                                     decoration: TextDecoration.lineThrough,
-                                    color: CustomColorStyles.ivanovo),
+                                    color: colors.ivanovo),
                               ),
                             if (model.sale != null) const SizedBox(width: 16),
                             Text(model.price,
-                                style: CustomFontStyles.body1.apply(
+                                style: fonts.body1.apply(
                                     color: model.sale == null
-                                        ? CustomColorStyles.moscow
-                                        : CustomColorStyles.london))
+                                        ? colors.moscow
+                                        : colors.london))
                           ])
                         ])
                   ],

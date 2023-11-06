@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
 import 'highlightable_button.dart';
 
-class HeadItemModel implements WidgetFactory {
+class HeadItemModel {
   final String title;
   final String imageURL;
   final bool isButtonHighlighted;
@@ -12,11 +12,6 @@ class HeadItemModel implements WidgetFactory {
 
   HeadItemModel(
       this.title, this.imageURL, this.isButtonHighlighted, this._onTap);
-
-  @override
-  Widget build() {
-    return HeadItemWidget(model: this);
-  }
 }
 
 class HeadItemWidget extends StatelessWidget {
@@ -27,12 +22,13 @@ class HeadItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     return SizedBox(
         height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(_model.title, style: CustomFontStyles.largeTitle),
+            Text(_model.title, style: fonts.largeTitle),
             SizedBox(
               width: 32,
               height: 32,

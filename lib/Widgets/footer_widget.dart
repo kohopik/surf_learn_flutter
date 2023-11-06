@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
 final class FooterItemValueModel {
@@ -7,20 +7,6 @@ final class FooterItemValueModel {
   final String value;
 
   FooterItemValueModel(this.name, this.value);
-}
-
-final class FotterItemModel implements WidgetFactory {
-  final String title;
-  final String result;
-  final List<FooterItemValueModel> items;
-
-  FotterItemModel(
-      {required this.title, required this.result, required this.items});
-
-  @override
-  Widget build() {
-    return FooterItemWidget(model: this);
-  }
 }
 
 final class FooterItemValueWidget extends StatelessWidget {
@@ -31,52 +17,56 @@ final class FooterItemValueWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(_model.name, style: CustomFontStyles.body),
-        Text(_model.value, style: CustomFontStyles.body1)
+        Text(_model.name, style: fonts.body),
+        Text(_model.value, style: fonts.body1)
       ],
     );
   }
 }
 
 final class FooterItemWidget extends StatelessWidget {
-  late final FotterItemModel _model;
+  final String title;
+  final String result;
+  final List<FooterItemValueModel> items;
   final int titleResultInset = 2;
-  late final int numberOfElements;
 
-  FooterItemWidget({required FotterItemModel model, super.key}) {
-    _model = model;
-    numberOfElements = model.items.length + titleResultInset;
-  }
+  const FooterItemWidget(
+      {required this.title,
+      required this.result,
+      required this.items,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     return ListView.builder(
         shrinkWrap: true,
         itemBuilder: (element, index) {
           if (index == 0) {
             return spacerBox(
                 Text(
-                  _model.title,
-                  style: CustomFontStyles.largeTitle1,
+                  title,
+                  style: fonts.largeTitle1,
                 ),
                 8);
           }
-          if (index == numberOfElements - 1) {
+          if (index == items.length + titleResultInset - 1) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Итого", style: CustomFontStyles.largeTitle1),
-                Text(_model.result, style: CustomFontStyles.largeTitle1)
+                Text("Итого", style: fonts.largeTitle1),
+                Text(result, style: fonts.largeTitle1)
               ],
             );
           }
-          final model = _model.items[index - 1];
+          final model = items[index - 1];
           return spacerBox(FooterItemValueWidget(model: model), 11);
         },
-        itemCount: numberOfElements);
+        itemCount: items.length + titleResultInset);
   }
 
   Align spacerBox(Widget child, double space) {

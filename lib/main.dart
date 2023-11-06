@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:surf_flutter/Models/entities.dart';
 import 'package:surf_flutter/Models/input.dart';
 import 'package:collection/collection.dart';
 import 'package:surf_flutter/Widgets/other_screen_widgets.dart';
@@ -20,7 +19,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      ),
+      ).copyWith(extensions: <ThemeExtension<dynamic>>[
+        const CustomColors(
+            alyaska: Color.fromRGBO(241, 241, 241, 1),
+            moscow: Color.fromRGBO(37, 40, 73, 1),
+            london: Colors.red,
+            ivanovo: Color.fromRGBO(181, 181, 181, 1),
+            monaco: Color.fromRGBO(121, 100, 100, 1),
+            amsterdam: Color.fromRGBO(96, 96, 123, 1),
+            washington: Color.fromRGBO(103, 205, 0, 1)),
+        const CustomFonts(
+            selectedTab: TextStyle(fontSize: 10.0, fontWeight: FontWeight.w600),
+            unselectedTab:
+                TextStyle(fontSize: 10.0, fontWeight: FontWeight.w600),
+            body: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400),
+            body1: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700),
+            largeTitle: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
+            largeTitle1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700),
+            bigLargeTitle:
+                TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700))
+      ]),
       home: const MyHomePage(),
     );
   }
@@ -46,9 +64,9 @@ class _MyHomePageState extends State<MyHomePage>
   ];
 
   List<Widget> pages = [
-    CatalogWidget(),
-    SearchWidget(),
-    BagWidget(),
+    const CatalogWidget(),
+    const SearchWidget(),
+    const BagWidget(),
     PersonalWidget(products)
   ];
 
@@ -67,21 +85,22 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    final CustomColors colors = Theme.of(context).extension<CustomColors>()!;
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Шестёрочка"),
         ),
         bottomNavigationBar: Container(
             decoration: BoxDecoration(
-              border: Border(
-                  top: BorderSide(color: CustomColorStyles.monaco, width: 1)),
+              border: Border(top: BorderSide(color: colors.alyaska, width: 1)),
             ),
             child: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
-                selectedLabelStyle: CustomFontStyles.selectedTab,
-                unselectedLabelStyle: CustomFontStyles.unselectedTab,
-                selectedItemColor: CustomColorStyles.washington,
-                unselectedItemColor: CustomColorStyles.amsterdam,
+                selectedLabelStyle: fonts.selectedTab,
+                unselectedLabelStyle: fonts.unselectedTab,
+                selectedItemColor: colors.washington,
+                unselectedItemColor: colors.amsterdam,
                 currentIndex: _index,
                 onTap: (value) {
                   setState(() {
@@ -93,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage>
                     .mapIndexed((index, item) => BottomNavigationBarItem(
                         icon: SvgPicture.asset(
                           item.icon,
-                          colorFilter: getTabColor(index),
+                          colorFilter: getTabColor(index, colors),
                         ),
                         label: item.title))
                     .toList())),
@@ -103,11 +122,9 @@ class _MyHomePageState extends State<MyHomePage>
         ));
   }
 
-  ColorFilter getTabColor(int index) {
+  ColorFilter getTabColor(int index, CustomColors colors) {
     return ColorFilter.mode(
-        _index == index
-            ? CustomColorStyles.washington
-            : CustomColorStyles.amsterdam,
+        _index == index ? colors.washington : colors.amsterdam,
         BlendMode.srcIn);
   }
 }

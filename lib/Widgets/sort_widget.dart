@@ -24,16 +24,17 @@ class SortWidgetState extends State<SortWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final CustomColors colors = Theme.of(context).extension<CustomColors>()!;
     return Column(
         children: widget._items.map((model) {
       return SizedBox(
           height: 56,
           child: RadioListTile(
-            contentPadding: EdgeInsets.only(left: 10),
+            contentPadding: const EdgeInsets.only(left: 10),
             title: Text(model.name),
             value: model,
             groupValue: selectedOption,
-            activeColor: CustomColorStyles.washington,
+            activeColor: colors.washington,
             onChanged: (value) {
               setState(() {
                 model.isSelected = true;

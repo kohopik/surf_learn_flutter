@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 
-class SeparatorModel implements WidgetFactory {
+class SeparatorWidget extends StatelessWidget {
+  const SeparatorWidget({super.key});
   @override
-  Widget build() {
-    return Expanded(
-        child: Container(height: 1, color: CustomColorStyles.alyaska));
+  Widget build(BuildContext context) {
+    final CustomColors colors = Theme.of(context).extension<CustomColors>()!;
+    return Expanded(child: Container(height: 1, color: colors.alyaska));
   }
 }

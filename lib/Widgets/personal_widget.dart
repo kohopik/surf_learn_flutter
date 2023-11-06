@@ -4,16 +4,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:surf_flutter/Extensions/product_extensions.dart';
 import 'package:surf_flutter/Models/entities.dart';
 import 'package:surf_flutter/Models/price_sortable.dart';
-import 'package:surf_flutter/Models/product_model.dart';
+import 'package:surf_flutter/Models/item_model.dart';
 import 'package:surf_flutter/Widgets/product_section_widget.dart';
 import 'package:surf_flutter/Widgets/sort_widget.dart';
-import 'package:surf_flutter/Widgets/widget_factory.dart';
 import 'package:surf_flutter/custom_theme.dart';
 import "package:collection/collection.dart";
 import 'package:surf_flutter/main.dart';
 
 import 'footer_widget.dart';
-import 'headItem_widget.dart';
+import 'head_Item_widget.dart';
 
 class PersonalWidget extends StatefulWidget {
   final List<ProductEntity> _elements;
@@ -25,7 +24,7 @@ class PersonalWidget extends StatefulWidget {
 }
 
 class PersonalWidgetState extends State<PersonalWidget> {
-  List<WidgetFactory> _listItems = [];
+  List<Widget> _listItems = [];
 
   @override
   void initState() {
@@ -36,10 +35,12 @@ class PersonalWidgetState extends State<PersonalWidget> {
   void updateList({PriceSortable<ProductEntity>? sortable}) {
     _listItems.clear();
     _listItems.add(
-      HeadItemModel(
-          "Список продуктов", "assets/images/sort.svg", sortable != null, () {
+      HeadItemWidget(
+          model: HeadItemModel(
+              "Список продуктов", "assets/images/sort.svg", sortable != null,
+              () {
         showContext(context);
-      }),
+      })),
     );
     _listItems.addAll(makeElements(sortable: sortable));
 
@@ -52,7 +53,7 @@ class PersonalWidgetState extends State<PersonalWidget> {
     final sumWithSale = (totalSum - totalSale.toDouble());
     final salePercent = (totalSale / totalSum).toStringAsFixed(5);
 
-    _listItems.add(FotterItemModel(
+    _listItems.add(FooterItemWidget(
         title: "В вашей покупке",
         result: "${sumWithSale.toStringAsFixed(2)} руб.",
         items: [
@@ -63,14 +64,14 @@ class PersonalWidgetState extends State<PersonalWidget> {
         ]));
   }
 
-  List<WidgetFactory> makeElements({PriceSortable<ProductEntity>? sortable}) {
+  List<Widget> makeElements({PriceSortable<ProductEntity>? sortable}) {
     final groupedItems = groupBy(widget._elements, (p0) => p0.category.name);
-    List<WidgetFactory> items = [];
+    List<Widget> items = [];
     groupedItems.forEach((key, value) {
-      items.add(ProductSectionModel(
-          key,
-          (sortable != null ? sortable.sort(value) : value)
-              .map((e) => ProductModel(
+      items.add(ProductSectionWidget(
+          title: key,
+          elements: (sortable != null ? sortable.sort(value) : value)
+              .map((e) => ItemModel(
                   e.title,
                   e.category,
                   e.amount.amountText(),
@@ -83,6 +84,7 @@ class PersonalWidgetState extends State<PersonalWidget> {
   }
 
   void showContext(BuildContext context) {
+    final CustomFonts fonts = Theme.of(context).extension<CustomFonts>()!;
     showStickyFlexibleBottomSheet(
       minHeight: 0,
       initHeight: 0.5,
@@ -113,7 +115,7 @@ class PersonalWidgetState extends State<PersonalWidget> {
                     children: [
                       Text(
                         "Сортировка",
-                        style: CustomFontStyles.bigLargeTitle,
+                        style: fonts.bigLargeTitle,
                       ),
                       IconButton(
                           onPressed: () {
@@ -162,8 +164,7 @@ class PersonalWidgetState extends State<PersonalWidget> {
           padding: const EdgeInsets.only(top: 16, bottom: 40),
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            final model = _listItems[index];
-            return model.build();
+            return _listItems[index];
           },
           itemCount: _listItems.length,
         )));

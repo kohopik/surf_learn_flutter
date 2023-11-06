@@ -16,11 +16,12 @@ class HighlightableButton extends StatefulWidget {
 class HighlightableButtonState extends State<HighlightableButton> {
   @override
   Widget build(BuildContext context) {
+    final CustomColors colors = Theme.of(context).extension<CustomColors>()!;
     return GestureDetector(
         onTap: widget.onTap,
         child: Container(
           decoration: BoxDecoration(
-              color: CustomColorStyles.alyaska,
+              color: colors.alyaska,
               borderRadius: const BorderRadius.all(Radius.circular(6))),
           child: Stack(children: [
             Align(
